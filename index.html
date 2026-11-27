@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>KINGS WEAR | متجر الملوك 👑</title>
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif;user-select:none}
+body{background:#ffffff;color:#1e293b;min-height:100vh;overflow-x:hidden;transition:background .5s}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:2}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 5%;background:rgba(255,255,255,.95);border-bottom:2px solid #d4af37;position:sticky;top:0;z-index:90;box-shadow:0 4px 15px rgba(0,0,0,.05)}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;color:#b45309;cursor:pointer}
+.logo img{height:42px;width:42px;object-fit:contain;border-radius:50%;border:1.5px solid #d4af37}
+.home-btn{background:#d4af37;color:#fff;border:none;padding:7px 16px;border-radius:20px;font-weight:900;cursor:pointer;font-size:13px;display:none}
+
+/* دمج الخلفية البيضاء للحيوانات تلقائياً */
+.beast{position:fixed;top:22%;right:-260px;width:230px;height:180px;object-fit:contain;z-index:70;pointer-events:none;display:none;mix-blend-mode:multiply}
+.beast.run{display:block;animation:cross 4.5s linear forwards}
+@keyframes cross{0%{right:-260px}100%{right:110vw}}
+
+.page{display:none;padding:30px 5% 50px;max-width:1150px;margin:auto;position:relative;z-index:10}
+.page.show{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:25px}
+.cat-card{background:#fff;border:2px solid #f1f5f9;border-radius:20px;overflow:hidden;cursor:pointer;transition:.3s;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.cat-card:hover{transform:translateY(-8px);border-color:#d4af37;box-shadow:0 12px 25px rgba(212,175,55,.2)}
+.cat-card img{width:100%;height:190px;object-fit:cover;background:#f8fafc}
+.cat-card h3{padding:14px;color:#92400e;font-size:19px}
+
+.rope-area{position:relative;padding-top:42px;margin-top:15px}
+.rope{position:absolute;top:45px;left:0;right:0;height:5px;background:linear-gradient(90deg,#78350f,#d97706,#78350f);border-radius:10px}
+.row{display:flex;justify-content:space-around;gap:14px;flex-wrap:wrap;position:relative;z-index:5}
+.item{display:flex;flex-direction:column;align-items:center;cursor:pointer;transform-origin:top center;animation:swing 3.2s ease-in-out infinite;width:170px}
+@keyframes swing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.pin{width:12px;height:26px;background:#d97706;border-radius:3px;z-index:6}
+.item img{width:160px;height:180px;object-fit:contain;margin-top:-6px;mix-blend-mode:multiply;filter:drop-shadow(0 10px 10px rgba(0,0,0,.15))}
+.tag{background:#fff;border:1.5px solid #d4af37;padding:4px 12px;border-radius:15px;text-align:center;margin-top:5px;font-size:13px;box-shadow:0 4px 10px rgba(0,0,0,.05)}
+.tag span{color:#b45309;display:block;font-weight:900}
+
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.75);backdrop-filter:blur(6px);justify-content:center;align-items:center;padding:20px;z-index:120}
+.mbox{background:#fff;border:2px solid #d4af37;border-radius:20px;padding:22px;width:100%;max-width:340px;text-align:center}
+.mbox img{width:185px;height:195px;object-fit:contain;mix-blend-mode:multiply}
+.wa{display:block;background:#25D366;color:#fff;padding:11px;border-radius:20px;text-decoration:none;font-weight:900;margin:10px 0}
+</style>
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+<img id="beast" class="beast" src="">
+
+<header>
+  <div class="logo" onclick="goHome()"><img src="logo.jpeg"><span>KINGS WEAR</span></div>
+  <button id="hbtn" class="home-btn" onclick="goHome()">🏠 الرئيسية والأقسام</button>
+</header>
+
+<div id="home" class="page show">
+  <div style="text-align:center">
+    <h1 style="color:#92400e;font-size:32px;font-weight:900">أهلاً بك في KINGS WEAR 👑</h1>
+    <p style="color:#64748b;margin-top:5px">اختر القسم الذي يناسب أسلوبك واستمتع بتجربة تسوق ملكية</p>
+  </div>
+  <div class="cats">
+    <div class="cat-card" onclick="openSec('p1','dragon.gif','fire','#fff7ed')">
+      <img src="casual.jpg"><h3>1. كاجوال وتيشيرتات</h3>
+    </div>
+    <div class="cat-card" onclick="openSec('p2','lion.gif','gold','#fefce8')">
+      <img src="suit.jpg"><h3>2. بدل وقمصان ملكية</h3>
+    </div>
+    <div class="cat-card" onclick="openSec('p3','tiger.gif','snow','#f0f9ff')">
+      <img src="jacket.jpg"><h3>3. جواكت وملابس شتوية</h3>
+    </div>
+    <div class="cat-card" onclick="openSec('p4','eagle.gif','stars','#faf5ff')">
+      <img src="shoes.jpg"><h3>4. أحذية وإكسسوارات</h3>
+    </div>
+  </div>
+</div>
+
+<div id="p1" class="page"><h2 style="text-align:center;color:#ea580c">🔥 قسم الكاجوال والتيشيرتات</h2><div class="rope-area"><div class="rope"></div><div class="row" id="r1"></div></div></div>
+<div id="p2" class="page"><h2 style="text-align:center;color:#b45309">👑 قسم البدل والقمصان الملكية</h2><div class="rope-area"><div class="rope"></div><div class="row" id="r2"></div></div></div>
+<div id="p3" class="page"><h2 style="text-align:center;color:#0284c7">❄️ قسم الجواكت والملابس الشتوية</h2><div class="rope-area"><div class="rope"></div><div class="row" id="r3"></div></div></div>
+<div id="p4" class="page"><h2 style="text-align:center;color:#7e22ce">⚡ قسم الأحذية والإكسسوارات</h2><div class="rope-area"><div class="rope"></div><div class="row" id="r4"></div></div></div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="mbox">
+    <img id="mi"><h3 id="mn" style="color:#92400e"></h3><h2 id="mp" style="color:#16a34a"></h2>
+    <select id="ms" style="padding:8px;border-radius:12px;border:1.5px solid #d4af37;margin:8px 0;font-weight:700;width:80%"><option>المقاس: M</option><option>المقاس: L</option><option>المقاس: XL</option><option>المقاس: XXL</option></select>
+
+    <a id="mw" class="wa" href="#" target="_blank">اطلب عبر واتساب 💬</a>
+    <button onclick="document.getElementById('modal').style.display='none'" style="background:none;border:1px solid #cbd5e1;color:#475569;padding:5px 15px;border-radius:15px">رجعها للحبل</button>
+  </div>
+</div>
+
+<script>
+var رقم_الواتساب = "0100000000";
+let weather = 'gold';
+
+const D={
+  r1:[{n:"تيشيرت أسود",p:"450 ج.م",i:"black.jpeg"},{n:"بولو كحلي",p:"520 ج.م",i:"bolo.jpeg"},{n:"تيشيرت رمادي",p:"390 ج.م",i:"ramady.jpeg"}],
+  r2:[{n:"بدلة ملكية",p:"3200 ج.م",i:"white1.jpeg"},{n:"قميص أبيض",p:"650 ج.م",i:"kames.jpeg"},{n:"بليزر كحلي",p:"1850 ج.م",i:"bleezer.jpeg"}],
+  r3:[{n:"جاكيت جلد",p:"2400 ج.م",i:"geld.jpeg"},{n:"هودي شتوي",p:"750 ج.م",i:"white2.jpeg"},{n:"بالطو جوخ",p:"2100 ج.م",i:"balto.jpeg"}],
+  r4:[{n:"حذاء جلد",p:"1100 ج.م",i:"gazma.jpeg"},{n:"سنيكرز أبيض",p:"950 ج.م",i:"snickers.jpeg"},{n:"ساعة يد",p:"1400 ج.م",i:"saaah.jpeg"}]
+};
+
+Object.keys(D).forEach(s=>{document.getElementById(s).innerHTML=D[s].map((x,i)=>`<div class="item" onclick="op('${s}',${i})"><div class="pin"></div><img src="${x.i}"><div class="tag"><b>${x.n}</b><span>${x.p}</span></div></div>`).join('');});
+
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById('home').classList.add('show');
+  document.getElementById('hbtn').style.display='none';
+  document.body.style.background='#ffffff';
+  weather='gold';
+}
+
+function openSec(id, gifSrc, wType, bgCol){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.getElementById('hbtn').style.display='inline-block';
+  document.body.style.background=bgCol;
+  weather=wType;
+  const b=document.getElementById('beast');
+  b.src=gifSrc; b.classList.remove('run'); void b.offsetWidth; b.classList.add('run');
+}
+
+function op(s,i){
+  const x=D[s][i];
+  document.getElementById('mi').src=x.i; document.getElementById('mn').innerText=x.n; document.getElementById('mp').innerText=x.p;
+  const updWa=()=>{let s=document.getElementById('ms').value;document.getElementById('mw').href="https://whatsapp.com"+01000000+"&text="+encodeURIComponent("طلب: "+x.n+" - "+s);};
+document.getElementById('ms').onchange=updWa; updWa();
+
+  document.getElementById('modal').style.display='flex';
+}
+
+const cv=document.getElementById('fx'), ctx=cv.getContext('2d');
+let W,H,pts=[];
+function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+window.onresize=rsz;rsz();
+for(let i=0;i<55;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:1.5+Math.random()*3,s:1+Math.random()*2});
+
+function anim(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{
+    if(weather==='snow'){ctx.fillStyle='rgba(14,165,233,.45)';p.y+=p.s;if(p.y>H)p.y=0;}
+    else if(weather==='fire'){ctx.fillStyle='rgba(234,88,12,.55)';p.y-=p.s*1.5;if(p.y<0)p.y=H;}
+    else if(weather==='gold'){ctx.fillStyle='rgba(217,119,6,.5)';p.y-=p.s*0.6;if(p.y<0)p.y=H;}
+    else{ctx.fillStyle='rgba(126,34,206,.4)';}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  });
+  requestAnimationFrame(anim);
+}
+anim();
+</script>
+</body>
+</html>
